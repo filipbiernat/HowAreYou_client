@@ -114,7 +114,7 @@ public class Plugins_Manager extends Aware_Activity {
             pluginsPackagesInstalled.append(")");
 
             //clean database from cached but no longer installed plugins
-            getContentResolver().delete(Aware_Plugins.CONTENT_URI,Aware_Plugins.PLUGIN_PACKAGE_NAME + " NOT IN " + pluginsPackagesInstalled.toString(), null);
+            //getContentResolver().delete(Aware_Plugins.CONTENT_URI,Aware_Plugins.PLUGIN_PACKAGE_NAME + " NOT IN " + pluginsPackagesInstalled.toString(), null);
 
         } catch (NameNotFoundException e) {
             e.printStackTrace();
