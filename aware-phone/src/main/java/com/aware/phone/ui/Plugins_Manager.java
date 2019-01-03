@@ -285,7 +285,7 @@ public class Plugins_Manager extends Aware_Activity {
                             @Override
                             public void onClick(View v) {
                                 AlertDialog.Builder builder = getPluginInfoDialog(name, version, description, developer);
-                                if (Aware.isClassAvailable(getApplicationContext(), package_name, "Settings")) {
+                                if (Aware.isClassAvailable(getApplicationContext(), package_name, "Settings") || true) {
                                     builder.setNegativeButton("Settings", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {

@@ -5,6 +5,7 @@ import android.Manifest;
 import android.app.Dialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,8 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -41,7 +44,9 @@ import com.aware.Aware;
 import com.aware.Aware_Preferences;
 import com.aware.phone.ui.Aware_Activity;
 import com.aware.phone.ui.Aware_Join_Study;
+import com.aware.providers.Aware_Provider;
 import com.aware.ui.PermissionsHandler;
+import com.aware.utils.Aware_Plugin;
 import com.aware.utils.Https;
 import com.aware.utils.SSLManager;
 
@@ -141,6 +146,27 @@ public class Aware_Client extends Aware_Activity implements SharedPreferences.On
         awarePackages.addAction(Intent.ACTION_PACKAGE_REMOVED);
         awarePackages.addDataScheme("package");
         registerReceiver(packageMonitor, awarePackages);
+
+
+        Cursor c = getContentResolver().query(Aware_Provider.Aware_Plugins.CONTENT_URI,
+                null,
+                Aware_Provider.Aware_Plugins.PLUGIN_PACKAGE_NAME + " = " + DatabaseUtils.sqlEscapeString("com.aware.plugin.howareyou"),
+                null,
+                null);
+        if(c.getCount() == 0) {
+            Log.d(Aware.TAG, "HowAreYou plugin not found in data base. Inserting...");
+
+            ContentValues rowData = new ContentValues();
+            rowData.put(Aware_Provider.Aware_Plugins.PLUGIN_AUTHOR, "Filip Biernat");
+            rowData.put(Aware_Provider.Aware_Plugins.PLUGIN_DESCRIPTION, "Emotion detection plugin");
+            rowData.put(Aware_Provider.Aware_Plugins.PLUGIN_NAME, "Aware: HowAreYou");
+            rowData.put(Aware_Provider.Aware_Plugins.PLUGIN_PACKAGE_NAME, "com.aware.plugin.howareyou");
+            rowData.put(Aware_Provider.Aware_Plugins.PLUGIN_STATUS, Aware_Plugin.STATUS_PLUGIN_OFF);
+            rowData.put(Aware_Provider.Aware_Plugins.PLUGIN_VERSION, "0.1");
+            getContentResolver().insert(Aware_Provider.Aware_Plugins.CONTENT_URI, rowData);
+        } else {
+            Log.d(Aware.TAG, "HowAreYou plugin already found in data base.");
+        }
     }
 
     @Override
