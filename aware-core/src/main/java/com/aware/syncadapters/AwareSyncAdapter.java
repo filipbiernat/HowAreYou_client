@@ -458,35 +458,36 @@ public class AwareSyncAdapter extends AbstractThreadedSyncAdapter {
         int TOTAL_RECORDS = 0;
         if (remoteData.length() == 0) {
             if (exists(columnsStr, "double_end_timestamp")) {
-                Cursor counter = mContext.getContentResolver().query(CONTENT_URI, new String[]{"count(*) as entries"}, "double_end_timestamp != 0" + study_condition, null, "_id ASC");
+                Cursor counter = mContext.getContentResolver().query(CONTENT_URI, null, "double_end_timestamp != 0" + study_condition, null, "_id ASC");
                 if (counter != null && counter.moveToFirst()) {
-                    TOTAL_RECORDS = counter.getInt(0);
+                    TOTAL_RECORDS = counter.getCount();
                     counter.close();
                 }
                 if (counter != null && !counter.isClosed()) counter.close();
             } else if (exists(columnsStr, "double_esm_user_answer_timestamp")) {
-                Cursor counter = mContext.getContentResolver().query(CONTENT_URI, new String[]{"count(*) as entries"}, "double_esm_user_answer_timestamp != 0" + study_condition, null, "_id ASC");
+                Cursor counter = mContext.getContentResolver().query(CONTENT_URI, null, "double_esm_user_answer_timestamp != 0" + study_condition, null, "_id ASC");
                 if (counter != null && counter.moveToFirst()) {
-                    TOTAL_RECORDS = counter.getInt(0);
+                    TOTAL_RECORDS = counter.getCount();
                     counter.close();
                 }
                 if (counter != null && !counter.isClosed()) counter.close();
             } else {
-                Cursor counter = mContext.getContentResolver().query(CONTENT_URI, new String[]{"count(*) as entries"}, "1" + study_condition, null, "_id ASC");
+                Cursor counter = mContext.getContentResolver().query(CONTENT_URI, null, "1" + study_condition, null, "_id ASC");
                 if (counter != null && counter.moveToFirst()) {
-                    TOTAL_RECORDS = counter.getInt(0);
+                    TOTAL_RECORDS = counter.getCount();
                     counter.close();
                 }
                 if (counter != null && !counter.isClosed()) counter.close();
+
             }
         } else {
             long last;
             if (exists(columnsStr, "double_end_timestamp")) {
                 if (remoteData.getJSONObject(0).has("double_end_timestamp")) {
                     last = remoteData.getJSONObject(0).getLong("double_end_timestamp");
-                    Cursor counter = mContext.getContentResolver().query(CONTENT_URI, new String[]{"count(*) as entries"}, "timestamp > " + last + " AND double_end_timestamp != 0" + study_condition, null, "_id ASC");
+                    Cursor counter = mContext.getContentResolver().query(CONTENT_URI, null, "timestamp > " + last + " AND double_end_timestamp != 0" + study_condition, null, "_id ASC");
                     if (counter != null && counter.moveToFirst()) {
-                        TOTAL_RECORDS = counter.getInt(0);
+                        TOTAL_RECORDS = counter.getCount();
                         counter.close();
                     }
                     if (counter != null && !counter.isClosed()) counter.close();
@@ -494,9 +495,9 @@ public class AwareSyncAdapter extends AbstractThreadedSyncAdapter {
             } else if (exists(columnsStr, "double_esm_user_answer_timestamp")) {
                 if (remoteData.getJSONObject(0).has("double_esm_user_answer_timestamp")) {
                     last = remoteData.getJSONObject(0).getLong("double_esm_user_answer_timestamp");
-                    Cursor counter = mContext.getContentResolver().query(CONTENT_URI, new String[]{"count(*) as entries"}, "timestamp > " + last + " AND double_esm_user_answer_timestamp != 0" + study_condition, null, "_id ASC");
+                    Cursor counter = mContext.getContentResolver().query(CONTENT_URI, null, "timestamp > " + last + " AND double_esm_user_answer_timestamp != 0" + study_condition, null, "_id ASC");
                     if (counter != null && counter.moveToFirst()) {
-                        TOTAL_RECORDS = counter.getInt(0);
+                        TOTAL_RECORDS = counter.getCount();
                         counter.close();
                     }
                     if (counter != null && !counter.isClosed()) counter.close();
@@ -504,9 +505,9 @@ public class AwareSyncAdapter extends AbstractThreadedSyncAdapter {
             } else {
                 if (remoteData.getJSONObject(0).has("timestamp")) {
                     last = remoteData.getJSONObject(0).getLong("timestamp");
-                    Cursor counter = mContext.getContentResolver().query(CONTENT_URI, new String[]{"count(*) as entries"}, "timestamp > " + last + study_condition, null, "_id ASC");
+                    Cursor counter = mContext.getContentResolver().query(CONTENT_URI, null, "timestamp > " + last + study_condition, null, "_id ASC");
                     if (counter != null && counter.moveToFirst()) {
-                        TOTAL_RECORDS = counter.getInt(0);
+                        TOTAL_RECORDS = counter.getCount();
                         counter.close();
                     }
                     if (counter != null && !counter.isClosed()) counter.close();
