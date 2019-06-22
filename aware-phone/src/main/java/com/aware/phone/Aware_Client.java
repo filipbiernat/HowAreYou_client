@@ -153,19 +153,23 @@ public class Aware_Client extends Aware_Activity implements SharedPreferences.On
                 Aware_Provider.Aware_Plugins.PLUGIN_PACKAGE_NAME + " = " + DatabaseUtils.sqlEscapeString("com.aware.plugin.howareyou"),
                 null,
                 null);
-        if(c.getCount() == 0) {
-            Log.d(Aware.TAG, "HowAreYou plugin not found in data base. Inserting...");
+        if (c != null) {
+            if (c.getCount() == 0) {
+                Log.d(Aware.TAG, "HowAreYou plugin not found in data base. Inserting...");
 
-            ContentValues rowData = new ContentValues();
-            rowData.put(Aware_Provider.Aware_Plugins.PLUGIN_AUTHOR, "Filip Biernat");
-            rowData.put(Aware_Provider.Aware_Plugins.PLUGIN_DESCRIPTION, "Emotion detection plugin");
-            rowData.put(Aware_Provider.Aware_Plugins.PLUGIN_NAME, "Aware: HowAreYou");
-            rowData.put(Aware_Provider.Aware_Plugins.PLUGIN_PACKAGE_NAME, "com.aware.plugin.howareyou");
-            rowData.put(Aware_Provider.Aware_Plugins.PLUGIN_STATUS, Aware_Plugin.STATUS_PLUGIN_OFF);
-            rowData.put(Aware_Provider.Aware_Plugins.PLUGIN_VERSION, "0.1");
-            getContentResolver().insert(Aware_Provider.Aware_Plugins.CONTENT_URI, rowData);
+                ContentValues rowData = new ContentValues();
+                rowData.put(Aware_Provider.Aware_Plugins.PLUGIN_AUTHOR, "Filip Biernat");
+                rowData.put(Aware_Provider.Aware_Plugins.PLUGIN_DESCRIPTION, "Emotion detection plugin");
+                rowData.put(Aware_Provider.Aware_Plugins.PLUGIN_NAME, "Aware: HowAreYou");
+                rowData.put(Aware_Provider.Aware_Plugins.PLUGIN_PACKAGE_NAME, "com.aware.plugin.howareyou");
+                rowData.put(Aware_Provider.Aware_Plugins.PLUGIN_STATUS, Aware_Plugin.STATUS_PLUGIN_OFF);
+                rowData.put(Aware_Provider.Aware_Plugins.PLUGIN_VERSION, "0.1");
+                getContentResolver().insert(Aware_Provider.Aware_Plugins.CONTENT_URI, rowData);
+            } else {
+                Log.d(Aware.TAG, "HowAreYou plugin already found in data base.");
+            }
         } else {
-            Log.d(Aware.TAG, "HowAreYou plugin already found in data base.");
+            Log.d(Aware.TAG, "Permissions not granted. HowAreYou plugin may not be found in data base.");
         }
     }
 

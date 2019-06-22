@@ -39,6 +39,9 @@ android {
         resValue "string", "provider_timezones", android.defaultConfig.applicationId + ".provider.timezone"
         resValue "string", "provider_traffic", android.defaultConfig.applicationId + ".provider.traffic"
         resValue "string", "provider_wifi", android.defaultConfig.applicationId + ".provider.wifi"
+        resValue "string", "provider_scheduler", android.defaultConfig.applicationId + ".provider.scheduler"
+        resValue "string", "provider_aware_settings", android.defaultConfig.applicationId + ".provider.aware_settings"
+        resValue "string", "provider_aware", android.defaultConfig.applicationId + ".provider.aware"
     }
 
     signingConfigs {
